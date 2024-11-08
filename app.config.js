@@ -12,6 +12,11 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
+    extra: {
+      eas: {
+        projectId: "4beb4f9b-ee1a-478a-b096-3da52c8c6746",
+      },
+    },
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.chitrakshtarun.legalai",
