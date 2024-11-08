@@ -1,12 +1,12 @@
 import { Text, View } from "react-native";
 import React from "react";
 
-const NotFoundPage = () => {
+const IndexPage = () => {
 	return (
 		<View className="flex flex-1 justify-center items-center">
-			<Text>Not Found Page</Text>
+			<Text>Index Page</Text>
 		</View>
 	);
 };
 
-export default NotFoundPage;
+export default IndexPage;
