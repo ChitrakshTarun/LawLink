@@ -22,7 +22,8 @@ export default function RootLayout() {
             name="chat"
             options={{
               headerShown: false,
-              presentation: "modal",
+              animation: "slide_from_bottom",
+              headerBackTitle: "Back",
             }}
           />
           <Stack.Screen name="+not-found" />
