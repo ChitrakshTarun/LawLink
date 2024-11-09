@@ -9,12 +9,7 @@ export default function ChatLayout() {
           headerTitle: "New Chat",
         }}
       />
-      <Stack.Screen
-        name="[id]"
-        options={{
-          headerTitle: "Chat history",
-        }}
-      />
+      <Stack.Screen name="[id]" />
     </Stack>
   );
 }

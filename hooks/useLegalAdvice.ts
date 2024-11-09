@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import OpenAI from "react-native-openai";
 import { Alert } from "react-native";
-import * as Haptics from "expo-haptics";
 import { PromptInterface } from "@/interfaces/Prompt";
 
 export function useLegalAdvice() {
@@ -29,15 +28,11 @@ export function useLegalAdvice() {
         if (newMessage) {
           const newWords = newMessage.trim().split(/\s+/).length;
           wordCount += newWords;
-          if (wordCount >= HAPTIC_WORD_THRESHOLD) {
-            wordCount = 0;
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          }
+
           return prevMessage + newMessage;
         }
         if (payload.choices[0]?.finish_reason === "stop") {
           setLoading(false);
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         }
         return prevMessage;
       });
@@ -57,8 +52,6 @@ export function useLegalAdvice() {
     }
 
     try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-
       setLoading(true);
       setResult("");
 
@@ -80,7 +73,6 @@ export function useLegalAdvice() {
     } catch (error) {
       console.error("Error getting legal advice:", error);
 
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       Alert.alert("Error", "Failed to get legal advice. Please try again.");
       setLoading(false);
     }
