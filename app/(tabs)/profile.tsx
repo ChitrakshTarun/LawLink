@@ -47,7 +47,11 @@ const ProfilePage = () => {
             }}
           />
           <View className="items-center mb-6">
-            <Image className="w-20 h-20 rounded-full mb-4" source={{ uri: pictureUrl }} />
+            <Image
+              className="w-20 h-20 rounded-full mb-4"
+              source={{ uri: pictureUrl }}
+              defaultSource={require("@/assets/images/placeholder.png")}
+            />
             <Text className="text-xl font-semibold text-gray-800">{name}</Text>
           </View>
           <View className="space-y-4">
