@@ -33,6 +33,7 @@ export default function RootLayout() {
               options={{
                 headerShown: false,
                 headerBackTitle: "Back",
+                presentation: "modal",
               }}
             />
             <Stack.Screen name="+not-found" />
