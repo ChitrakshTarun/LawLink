@@ -6,6 +6,7 @@ export default function ChatLayout() {
       <Stack.Screen
         name="new"
         options={{
+          presentation: "modal",
           headerTitle: "New Chat",
         }}
       />

@@ -1,7 +1,10 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRouter } from "expo-router";
+import * as Haptics from "expo-haptics";
 
 export default function TabLayout() {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={{
@@ -18,16 +21,13 @@ export default function TabLayout() {
             <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
           ),
         }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          headerTitle: "Search",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons name={focused ? "search" : "search-outline"} size={size} color={color} />
-          ),
+        listeners={{
+          tabPress: () => {
+            Haptics.impactAsync();
+          },
         }}
       />
+
       <Tabs.Screen
         name="chat"
         options={{
@@ -36,16 +36,15 @@ export default function TabLayout() {
             <Ionicons name={focused ? "add-circle" : "add-circle-outline"} size={size} color={"black"} />
           ),
         }}
-      />
-      <Tabs.Screen
-        name="previous"
-        options={{
-          headerTitle: "Cases",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons name={focused ? "briefcase" : "briefcase-outline"} size={size} color={color} />
-          ),
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            Haptics.impactAsync();
+            router.push("/chat/new");
+          },
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
@@ -53,6 +52,11 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name={focused ? "person" : "person-outline"} size={size} color={color} />
           ),
+        }}
+        listeners={{
+          tabPress: () => {
+            Haptics.impactAsync();
+          },
         }}
       />
     </Tabs>
