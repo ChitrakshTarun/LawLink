@@ -29,9 +29,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="new"
+        name="chat"
         options={{
-          headerTitle: "LegalAI",
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name={focused ? "add-circle" : "add-circle-outline"} size={size} color={"black"} />
           ),
@@ -49,7 +49,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          headerTitle: "LegalAI",
+          headerTitle: "Profile",
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name={focused ? "person" : "person-outline"} size={size} color={color} />
           ),
