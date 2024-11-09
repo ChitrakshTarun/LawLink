@@ -3,5 +3,6 @@ export interface PromptInterface {
   age: number;
   email: string;
   criminalHistory: string | undefined;
+  summary?: string;
   description: string;
 }
