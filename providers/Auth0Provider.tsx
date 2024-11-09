@@ -2,9 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
-
-const AUTH0_DOMAIN = process.env.EXPO_PUBLIC_AUTH0_DOMAIN_URL!;
-const AUTH0_CLIENT_ID = process.env.EXPO_PUBLIC_AUTH0_CLIENT_ID!;
+import { storage } from "@/store";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -13,18 +11,20 @@ type AuthContextType = {
   logout: () => Promise<void>;
   loading: boolean;
   error: string | null;
+  updateUser: (updatedUser: { name?: string; picture?: string }) => Promise<void>;
 };
 
 type Auth0ProviderProps = {
   children: ReactNode;
 };
 
-// Create the auth request
+const AUTH0_DOMAIN_URL = process.env.EXPO_PUBLIC_AUTH0_DOMAIN_URL!;
+const AUTH0_CLIENT_ID = process.env.EXPO_PUBLIC_AUTH0_CLIENT_ID!;
+
 const useAuth0Request = () => {
-  // Log the redirect URI to help with debugging
   const redirectUri = AuthSession.makeRedirectUri({
     scheme: "myapp",
-    path: "callback", // Add explicit callback path
+    path: "callback",
   });
 
   return AuthSession.useAuthRequest(
@@ -34,13 +34,13 @@ const useAuth0Request = () => {
       redirectUri,
       responseType: AuthSession.ResponseType.Code,
       extraParams: {
-        audience: `https://${AUTH0_DOMAIN}/api/v2/`,
+        audience: `https://${AUTH0_DOMAIN_URL}/api/v2/`,
       },
     },
     {
-      authorizationEndpoint: `https://${AUTH0_DOMAIN}/authorize`,
-      tokenEndpoint: `https://${AUTH0_DOMAIN}/oauth/token`,
-      revocationEndpoint: `https://${AUTH0_DOMAIN}/oauth/revoke`,
+      authorizationEndpoint: `https://${AUTH0_DOMAIN_URL}/authorize`,
+      tokenEndpoint: `https://${AUTH0_DOMAIN_URL}/oauth/token`,
+      revocationEndpoint: `https://${AUTH0_DOMAIN_URL}/oauth/revoke`,
     }
   );
 };
@@ -52,6 +52,7 @@ const AuthContext = createContext<AuthContextType>({
   logout: async () => {},
   loading: true,
   error: null,
+  updateUser: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -92,13 +93,13 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
           },
         },
         {
-          tokenEndpoint: `https://${AUTH0_DOMAIN}/oauth/token`,
+          tokenEndpoint: `https://${AUTH0_DOMAIN_URL}/oauth/token`,
         }
       );
 
       await SecureStore.setItemAsync("auth_tokens", JSON.stringify(tokenResult));
 
-      const userInfoResponse = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
+      const userInfoResponse = await fetch(`https://${AUTH0_DOMAIN_URL}/userinfo`, {
         headers: {
           Authorization: `Bearer ${tokenResult.accessToken}`,
         },
@@ -111,6 +112,8 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
       const userInfo = await userInfoResponse.json();
       setUser(userInfo);
       setIsAuthenticated(true);
+      storage.set("user.name", userInfo.nickname);
+      storage.set("user.email", userInfo.email);
     } catch (error) {
       console.error("Token exchange error:", error);
       setError(error instanceof Error ? error.message : "Failed to complete authentication");
@@ -143,7 +146,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
         path: "callback",
       });
 
-      const logoutUrl = `https://${AUTH0_DOMAIN}/v2/logout?client_id=${AUTH0_CLIENT_ID}&returnTo=${encodeURIComponent(
+      const logoutUrl = `https://${AUTH0_DOMAIN_URL}/v2/logout?client_id=${AUTH0_CLIENT_ID}&returnTo=${encodeURIComponent(
         redirectUri
       )}`;
 
@@ -157,6 +160,37 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
     }
   };
 
+  const updateUser = async (updatedUser: { name?: string; picture?: string }) => {
+    try {
+      setError(null);
+      const tokensString = await SecureStore.getItemAsync("auth_tokens");
+      if (!tokensString) throw new Error("Not authenticated");
+
+      const tokens = JSON.parse(tokensString);
+
+      // This is only for demonstration purposes; updating user data requires Auth0 Management API.
+      const response = await fetch(`https://${AUTH0_DOMAIN_URL}/api/v2/users/${user.sub}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${tokens.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_metadata: updatedUser }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      // Update local user state
+      const updatedUserInfo = await response.json();
+      setUser((prevUser: any) => ({ ...prevUser, ...updatedUserInfo }));
+    } catch (error) {
+      console.error("Update user error:", error);
+      setError(error instanceof Error ? error.message : "Failed to update user profile");
+    }
+  };
+
   useEffect(() => {
     async function checkAuthState() {
       try {
@@ -165,7 +199,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
         if (tokensString) {
           const tokens = JSON.parse(tokensString);
 
-          const userInfoResponse = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
+          const userInfoResponse = await fetch(`https://${AUTH0_DOMAIN_URL}/userinfo`, {
             headers: {
               Authorization: `Bearer ${tokens.accessToken}`,
             },
@@ -175,8 +209,9 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
             const userInfo = await userInfoResponse.json();
             setUser(userInfo);
             setIsAuthenticated(true);
+            storage.set("user.name", userInfo.nickname);
+            storage.set("user.email", userInfo.email);
           } else {
-            // Token might be expired or invalid
             await SecureStore.deleteItemAsync("auth_tokens");
           }
         }
@@ -200,6 +235,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
         logout,
         loading,
         error,
+        updateUser,
       }}
     >
       {children}

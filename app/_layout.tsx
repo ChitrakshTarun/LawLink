@@ -28,6 +28,13 @@ export default function RootLayout() {
                 headerBackTitle: "Back",
               }}
             />
+            <Stack.Screen
+              name="lawyers"
+              options={{
+                headerShown: false,
+                headerBackTitle: "Back",
+              }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </GestureHandlerRootView>

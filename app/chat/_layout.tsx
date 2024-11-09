@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { useRouter } from "expo-router";
 import { Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 
 export default function ChatLayout() {
   const router = useRouter();
@@ -13,7 +14,12 @@ export default function ChatLayout() {
           presentation: "modal",
           headerTitle: "New Chat",
           headerRight: () => (
-            <Pressable onPress={() => router.back()}>
+            <Pressable
+              onPress={() => {
+                Haptics.selectionAsync();
+                router.back();
+              }}
+            >
               <Ionicons name="close-circle" color={"black"} size={24} />
             </Pressable>
           ),

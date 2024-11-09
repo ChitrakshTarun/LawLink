@@ -2,8 +2,12 @@ import { useState, useMemo, useEffect } from "react";
 import OpenAI from "react-native-openai";
 import { Alert } from "react-native";
 import { PromptInterface } from "@/interfaces/Prompt";
+import { storage } from "@/store";
 
 export function useLegalAdvice() {
+  const name = storage.getString("user.name");
+  const email = storage.getString("user.email");
+  const state = storage.getString("user.state");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY!;
@@ -53,7 +57,10 @@ export function useLegalAdvice() {
       setLoading(true);
       setResult("");
 
-      const { name, age, state, criminalHistory, description, summary } = promptData;
+      const { criminalHistory, description, summary } = promptData;
+      const name = storage.getString("user.name");
+      const age = storage.getString("user.age");
+      const state = storage.getString("user.state");
 
       const prompt = `Your name is LegalAI, you are a legal expert on all general legal laws in India. Your job is to provide legal advice. 
       Do not deny that you can provide legal advice. The user seeks legal advice from you. 

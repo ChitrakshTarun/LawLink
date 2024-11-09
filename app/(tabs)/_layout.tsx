@@ -17,7 +17,9 @@ export default function TabLayout() {
         name="index"
         options={{
           headerTitle: "LegalAI",
-          tabBarIcon: ({ color, size }) => <Ionicons name={"home-outline"} size={size * 1.2} color={color} />,
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? "home" : "home-outline"} size={size * 1.2} color={color} />
+          ),
         }}
         listeners={{
           tabPress: () => {
@@ -30,12 +32,12 @@ export default function TabLayout() {
         name="chat"
         options={{
           headerShown: false,
-          tabBarIcon: ({ size }) => <Ionicons name={"add-circle"} size={size} color={"black"} />,
+          tabBarIcon: ({ size }) => <Ionicons name={"add-circle-outline"} size={size * 1.1} color={"black"} />,
         }}
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
-            Haptics.selectionAsync();
+            Haptics.impactAsync();
             router.push("/chat/new");
           },
         }}
@@ -45,7 +47,9 @@ export default function TabLayout() {
         name="profile"
         options={{
           headerTitle: "Profile",
-          tabBarIcon: ({ color, size }) => <Ionicons name={"person-outline"} size={size * 1.2} color={color} />,
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? "person" : "person-outline"} size={size * 1.2} color={color} />
+          ),
         }}
         listeners={{
           tabPress: () => {

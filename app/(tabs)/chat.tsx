@@ -3,8 +3,8 @@ import React from "react";
 
 const ChatPage = () => {
   return (
-    <View>
-      <Text>ChatPage</Text>
+    <View className="flex flex-1 items-center justify-center">
+      <Text>You shouldn't be able to access this page 🤔</Text>
     </View>
   );
 };
