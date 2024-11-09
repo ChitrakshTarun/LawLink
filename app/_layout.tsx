@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
-import { useAuth0, Auth0Provider } from "react-native-auth0";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@/global.css";
@@ -14,9 +13,9 @@ export default function RootLayout() {
         <StatusBar barStyle={"dark-content"} />
         <Stack>
           <Stack.Screen
-            name="index"
+            name="(tabs)"
             options={{
-              headerTitle: "Index",
+              headerShown: false,
             }}
           />
           <Stack.Screen name="+not-found" />
