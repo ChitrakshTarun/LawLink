@@ -16,7 +16,7 @@ const ListHeader = ({ title, subtitle, pathname }: ListHeaderProps) => {
     return router.push(pathname);
   };
   return (
-    <Pressable className="flex flex-row items-center" onPress={handlePress}>
+    <Pressable className="flex flex-row py-2 items-center" onPress={handlePress}>
       <View className="flex flex-1">
         <Text className="text-2xl font-bold">{title}</Text>
         <Text>{subtitle}</Text>

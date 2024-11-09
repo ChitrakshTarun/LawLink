@@ -6,7 +6,7 @@ import LawyerCard from "@/components/LawyerCard";
 
 const LawyerPage = () => {
   return (
-    <View className="flex flex-1 p-4">
+    <View className="flex flex-1 m-4">
       <FlashList
         className="flex flex-1"
         ItemSeparatorComponent={() => <View className="px-2" />}
