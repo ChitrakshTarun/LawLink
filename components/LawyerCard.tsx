@@ -20,9 +20,9 @@ const LawyerCard = ({ name, rating, practicingAreas }: LawyerInterface) => {
       <View className="flex-row items-center space-x-4 gap-4">
         <View className="w-16 h-16 rounded-full bg-gray-100 overflow-hidden">
           <Image
-            source={require("@/assets/images/legalai-logo.png")}
+            source={require("@/assets/images/lawlink-logo.png")}
             className="w-full h-full"
-            defaultSource={require("@/assets/images/legalai-logo.png")}
+            defaultSource={require("@/assets/images/lawlink-logo.png")}
           />
         </View>
 

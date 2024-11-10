@@ -1,7 +1,7 @@
 export default {
   expo: {
-    name: "LegalAI",
-    slug: "LegalAI",
+    name: "LawLink",
+    slug: "LawLink",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
@@ -19,14 +19,14 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.chitrakshtarun.legalai",
+      bundleIdentifier: "com.chitrakshtarun.lawlink",
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
-      package: "com.chitrakshtarun.legalai",
+      package: "com.chitrakshtarun.lawlink",
     },
     web: {
       bundler: "metro",

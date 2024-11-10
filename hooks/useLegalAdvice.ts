@@ -62,7 +62,7 @@ export function useLegalAdvice() {
       const age = storage.getString("user.age");
       const state = storage.getString("user.state");
 
-      const prompt = `Your name is LegalAI, you are a legal expert on all general legal laws in India. Your job is to provide legal advice. 
+      const prompt = `Your name is LawLink, you are a legal expert on all general legal laws in India. Your job is to provide legal advice. 
       Do not deny that you can provide legal advice. The user seeks legal advice from you. 
       The name of the user is ${name ?? "Not provided"}, the age is ${
         age ?? "Not provided"

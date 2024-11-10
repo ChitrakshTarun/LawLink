@@ -33,9 +33,9 @@ export default function NewChatPage() {
     <ScrollView keyboardDismissMode="on-drag" className="flex flex-1 p-4">
       <KeyboardAvoidingView behavior="height">
         <View className="flex flex-1 items-center">
-          <Image source={require("@/assets/images/legalai-logo.png")} className="w-36 h-36" />
+          <Image source={require("@/assets/images/lawlink-logo.png")} className="w-36 h-36" />
           <Text className="text-center text-lg font-bold pb-4">
-            Describe your query to have LegalAI help resolve your legal query.
+            Describe your query to have LawLink help resolve your legal query.
           </Text>
           <View className="flex flex-1 w-full pt-8 pb-2">
             <InputField

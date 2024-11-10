@@ -19,7 +19,7 @@ const HomePage = () => {
   return (
     <ScrollView className="flex flex-1 p-4">
       {/* PREVIOUS QUERIES */}
-      <ListHeader title="Try LegalAI" subtitle="Use these prompts for inspiration" />
+      <ListHeader title="Try LawLink" subtitle="Use these prompts for inspiration" />
       <FlashList
         contentContainerClassName="pt-2"
         ItemSeparatorComponent={() => <View className="px-2" />}
