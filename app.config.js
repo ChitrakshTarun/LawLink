@@ -19,14 +19,14 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.chitrakshtarun.lawlink",
+      bundleIdentifier: "com.chitrakshtarun.legalai",
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
-      package: "com.chitrakshtarun.lawlink",
+      package: "com.chitrakshtarun.legalai",
     },
     web: {
       bundler: "metro",
