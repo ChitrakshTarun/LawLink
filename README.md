@@ -1,6 +1,6 @@
 # LawLink
 
-Native mobile client for [LawLink](https://github.com/ManasJhaMJ/lawlink).
+Native mobile client for [LawLink](https://github.com/ManasJhaMJ/LawLink).
 
 [ Project Submitted during HackCBS 7.0 under Team RTX4050 ]
 
