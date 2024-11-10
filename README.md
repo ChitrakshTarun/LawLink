@@ -1,6 +1,6 @@
 # LawLink
 
-### 🔗 [LawLink Web App](https://github.com/ManasJhaMJ/LawLinkWeb)
+### 🔗 [LawLink Web App](https://github.com/ManasJhaMJ/LawLink-Web)
 
 Native mobile client for LawLink.
 
